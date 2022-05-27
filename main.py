@@ -32,7 +32,6 @@ class Enemy(Entity):
     def __str__(self):
         return f"Name: {Fore.LIGHTGREEN_EX + self.name + Fore.RESET} HP: {Fore.LIGHTRED_EX + str(self.hp) + Fore.RESET} Lvl. {Fore.LIGHTMAGENTA_EX + str(self.level) + Fore.RESET} "
 
-
 class Character(Entity):
     def __init__(self, name, hp, dmg, level, xp, inv, mana, max_mana, spell_inv):
         super().__init__(name, hp, dmg, level, xp, inv)
@@ -74,31 +73,25 @@ class Character(Entity):
 
     def player_turn(self, p2):
 
-        os.system('cls')
         print('{}\n{}'.format(self.__str__(), p2.__str__()))
 
         choice = input(
-            f"\nWhat do you want to do?\n" + Fore.LIGHTRED_EX + "Attack" + Fore.LIGHTBLUE_EX + "       Magic\n" +
-            Fore.LIGHTYELLOW_EX + "Flee" + Fore.LIGHTMAGENTA_EX + "         Item\n" + Fore.RESET + ">> ").lower()
+            f'\nWhat do you want to do?\n' + Fore.LIGHTRED_EX + 'Attack' + Fore.LIGHTBLUE_EX + '       Magic\n' +
+            Fore.LIGHTYELLOW_EX + 'Flee' + Fore.LIGHTMAGENTA_EX + '         Item\n' + Fore.RESET + '>> ').lower()
 
-        if choice == "atk" or choice == "attack":
-            os.system('cls')
+        if choice == 'atk' or choice == "attack":
             self.attack(p2)
 
-        elif choice == "item" or choice == 'inventory':
-            os.system('cls')
+        elif choice == 'item' or choice == 'inventory':
             self.inventory(p2)
 
         elif choice == 'magic':
-            os.system('cls')
             self.magic(p2)
 
         elif choice == 'flee':
-            os.system('cls')
             self.flee()
 
         time.sleep(2)
-        os.system('cls')
 
         if not self.win:
             self.enemy_turn(p2)
@@ -106,7 +99,6 @@ class Character(Entity):
     def enemy_turn(self, p2):
 
         if p2.hp <= 0:
-            os.system('cls')
             print("{} defeated the {}".format(self.name, p2.name))
             self.lvl_xp(p2)
             print("{0} gained {1} xp! {0} is level {2}.".format(self.name, p2.xp, self.level))
@@ -118,7 +110,6 @@ class Character(Entity):
             time.sleep(3)
 
             if self.hp <= 0:
-                os.system('cls')
                 sys.exit("{} died...".format(self.name))
 
     def battle(self, *enemy):
@@ -159,7 +150,6 @@ class Character(Entity):
 init(autoreset=True)
 
 name = input("What is your name?\n>> ")
-os.system('cls')
 
 char = Character(name, 20, 5, 1, 0, ["Estus Flask", "Estus Flask", "Golden Bag of Holding", "Beets"], 2, 4,
                  ['Ice Block', 'Vengeful Spirit', 'Death Pact'])
