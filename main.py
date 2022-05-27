@@ -1,5 +1,4 @@
 import math
-import os
 import random
 import sys
 import time
@@ -34,7 +33,7 @@ class Enemy(Entity):
 
 
 class Character(Entity):
-    def __init__(self, name, hp, dmg, level, xp, inv, mana, max_mana, spell_inv):
+    def __init__(self, name, hp, dmg, level, xp, inv, mana, max_mana, spell_inv, equipped):
         super().__init__(name, hp, dmg, level, xp, inv)
         self.max_hp = self.hp
         self.max_dmg = self.dmg
@@ -42,19 +41,13 @@ class Character(Entity):
         self.max_mana = max_mana
         self.win = False
         self.spell_inv = spell_inv
+        self.equipped = equipped
 
     def attack(self, enemy, atk_spell=1):
-        damage_range = random.randint(self.dmg + self.level, self.dmg * 2 + self.level * 2)
-        crit_roll = random.randint(1, 16)
-        if crit_roll == 16:
-            print("It was a critical hit!")
-            damage_range *= 2
-        print("{} did {} dmg!".format(self.name, math.ceil(damage_range * atk_spell)))
-        enemy.hp -= math.ceil(damage_range * atk_spell)
-        print('{} is down to {} hp!'.format(enemy.name, enemy.hp if enemy.hp >= 0 else 0))
+        return items.Item.weapon_function(self, enemy, atk_spell)
 
     def inventory(self, p2):
-        items.Item.item_function(self, p2)
+        return items.Item.item_function(self, p2)
 
     def magic(self, enemy):
         return spell_module.Magic.magic_function(self, enemy)
@@ -153,6 +146,8 @@ init(autoreset=True)
 name = input("What is your name?\n>> ")
 
 char = Character(name, 20, 5, 1, 0, ["Estus Flask", "Estus Flask", "Golden Bag of Holding", "Beets"], 2, 4,
-                 ['Ice Block', 'Vengeful Spirit', 'Death Pact'])
+                 ['Ice Block', 'Vengeful Spirit', 'Death Pact'], 'Damaged Shortsword')
 
-char.battle(Enemy('Rugged Skeleton', 12, 1, 2, 50, []), Enemy('Moon Lord', 10, 3, 1, 300, []))
+
+char.battle(None, Enemy('Moon Lord', 10, 3, 1, 300, []))
+
