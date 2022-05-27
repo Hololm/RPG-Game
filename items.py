@@ -26,6 +26,8 @@ class Item:
                     elif item_choice == 'buff items':
                         self.dmg += items_collection[item_choice][item_name].function
 
+                    self.inv.remove(item_name)
+
                 else:
                     print("Could not find the item...".format(self.name))
 

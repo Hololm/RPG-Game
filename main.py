@@ -32,6 +32,7 @@ class Enemy(Entity):
     def __str__(self):
         return f"Name: {Fore.LIGHTGREEN_EX + self.name + Fore.RESET} HP: {Fore.LIGHTRED_EX + str(self.hp) + Fore.RESET} Lvl. {Fore.LIGHTMAGENTA_EX + str(self.level) + Fore.RESET} "
 
+
 class Character(Entity):
     def __init__(self, name, hp, dmg, level, xp, inv, mana, max_mana, spell_inv):
         super().__init__(name, hp, dmg, level, xp, inv)
